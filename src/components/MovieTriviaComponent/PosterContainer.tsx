@@ -8,7 +8,7 @@ const PosterContainer:React.FC<Props> = ({imageSrc}):ReactElement => {
   return (
     <div className="poster-container">
     <img
-      id="one"
+      className="one"
       src={imageSrc}
     />
   </div>

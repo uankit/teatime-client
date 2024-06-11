@@ -7,11 +7,11 @@ import ButtonContainer from "./ButtonContainer";
 import { Movie } from "../../types/movie";
 
 type Props = {
-  movies: Movie[];
+  movie: Movie;
 };
 
-const FooterChildren: React.FC = (): ReactElement => {
-  const movieTitle = "BATMAN";
+const FooterChildren: React.FC<Props> = ({movie}): ReactElement => {
+  const movieTitle = movie.title;
 
   const generateRandomIndex = () => {
     const firstIndex = Math.floor(Math.random() * movieTitle.length);
@@ -19,60 +19,101 @@ const FooterChildren: React.FC = (): ReactElement => {
     return [firstIndex, secondIndex];
   };
 
-  const [inputs, setInputs] = useState(new Array(movieTitle.length).fill(""));
-  const [revealedPositions, setRevealedPositions] = useState<number[]>([]);
+//   const [inputs, setInputs] = useState(new Array(movieTitle.length).fill(""));
+const words = movieTitle.split(" ");
+
+const initialInputs = words.map(word => new Array(word.length).fill(''));  
+const [inputs, setInputs] = useState(initialInputs);
+const [revealedPositions, setRevealedPositions] = useState<number[]>([]);
 
   useEffect(() => {
     const positions = generateRandomIndex();
     setRevealedPositions(positions);
   }, []);
 
-  useEffect(() => {
-    const initialInputs = inputs.map((input, index) =>
-      revealedPositions.includes(index) ? movieTitle[index] : ""
-    );    
-    setInputs(initialInputs);
+//   useEffect(() => {
+//     const initialInputs = inputs.map((input, index) =>
+//       revealedPositions.includes(index) ? movieTitle[index] : ""
+//     );    
+//     setInputs(initialInputs);
+//   }, [revealedPositions]);
+
+useEffect(() => {
+    const updatedInputs = inputs.map((wordInputs, wordIndex) =>
+      wordInputs.map((_: any, charIndex: number) => {
+        const globalIndex = words.slice(0, wordIndex).join(' ').length + wordIndex + charIndex;
+        return revealedPositions.includes(globalIndex) ? movieTitle[globalIndex] : '';
+      })
+    );
+    setInputs(updatedInputs);
   }, [revealedPositions]);
 
-  const handleChange = (event: any, index: number) => {
-    const newInputs = [...inputs];
-    newInputs[index] = event.target.value;
+//   const handleChange = (event: any, index: number) => {
+//     const newInputs = [...inputs];
+//     newInputs[index] = event.target.value;
+//     setInputs(newInputs);
+//   };
+
+//   const checkTitle = () => {
+//     const userTitle = inputs.join("");
+//     if (userTitle === movieTitle) {
+//       alert("Correct!");
+//     } else {
+//       alert("Try again!");
+//     }
+//   };
+
+const handleChange = (event: React.ChangeEvent<HTMLInputElement>, wordIndex: number, charIndex: number) => {
+    const newInputs = inputs.map((wordInputs, wi) =>
+      wordInputs.map((input: any, ci: any) =>
+        wi === wordIndex && ci === charIndex ? event.target.value : input
+      )
+    );
     setInputs(newInputs);
   };
 
   const checkTitle = () => {
-    const userTitle = inputs.join("");
+    const userTitle = inputs.map(wordInputs => wordInputs.join('')).join(' ');
     if (userTitle === movieTitle) {
-      alert("Correct!");
+      alert('Correct!');
     } else {
-      alert("Try again!");
+      alert('Try again!');
     }
   };
 
   return (
     <>
+    <div className="title-container">
       <div className="input-container">
-        {inputs.map((input, index) => (
-          <InputComponent
-            key={index}
-            type={"text"}
-            maxLength={1}
-            value={input}
-            disabled={revealedPositions.includes(index)}
-            handleChange={(e) => handleChange(e, index)}
-          />
+        {inputs.map((wordInputs, wordIndex) => (
+          <div key={wordIndex} className="word-container">
+            {wordInputs.map((input: string, charIndex: number) => (
+              <input 
+                key={charIndex}
+                type="text"
+                maxLength={1}
+                className="input-box"
+                value={input}
+                onChange={(event) => handleChange(event, wordIndex, charIndex)}
+                disabled={revealedPositions.includes(
+                  words.slice(0, wordIndex).join(' ').length + wordIndex + charIndex
+                )}
+              />
+            ))}
+          </div>
         ))}
       </div>
       <ButtonContainer />
+    </div>
     </>
   );
 };
 
-const RightContainer: React.FC<Props> = ({ movies }): ReactElement => {
+const RightContainer: React.FC<Props> = ({ movie }): ReactElement => {
   return (
     <div className="right">
-      <PosterContainer imageSrc="https://m.media-amazon.com/images/M/MV5BYmY4MzY5NDQtZjI5Ni00NjQ2LTg0YjUtNGJhNmFkN2Y3ODEyXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg" />
-      <FooterComponent children={<FooterChildren />} />
+      <PosterContainer imageSrc={movie.poster} />
+      <FooterComponent children={<FooterChildren movie={movie} />} />
     </div>
   );
 };

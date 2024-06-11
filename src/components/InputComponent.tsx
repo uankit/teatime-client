@@ -19,7 +19,6 @@ const InputComponent: React.FC<Props> = ({
 }): ReactElement => {
   return (
     <div className="title-container">
-      <div className="input-container">
         <input 
           key={key}
           type={type}
@@ -30,7 +29,6 @@ const InputComponent: React.FC<Props> = ({
           disabled={disabled}
         />
       </div>
-    </div>
   );
 };
 
