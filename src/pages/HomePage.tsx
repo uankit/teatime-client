@@ -1,6 +1,6 @@
 import { Card } from "antd";
 import styles from "../styles/HomePage.module.css";
-import MovieTriviaPoster from "../assets/movie_trivia.jpeg";
+import MovieTriviaPoster from "../assets/images/movie_trivia.jpeg";
 import React, { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 
