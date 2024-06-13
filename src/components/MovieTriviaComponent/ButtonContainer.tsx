@@ -1,12 +1,16 @@
 import { Button } from 'antd'
 import React, { ReactElement } from 'react'
+import styles from "../../styles/MovieTriviaPage.module.css";
 
-const ButtonContainer: React.FC = ():ReactElement => {
+
+type Props = {
+  handleSubmit: () => void
+}
+const ButtonContainer: React.FC<Props> = ({handleSubmit}):ReactElement => {
 
   return (
-    <div className='button-container'>
-        <Button onClick={()=>{}}>I'm done</Button>
-        <Button>I'm stuck</Button>
+    <div className={styles.buttonContainer}>
+        <Button onClick={handleSubmit}>I'm done</Button>
     </div>
   )
 }

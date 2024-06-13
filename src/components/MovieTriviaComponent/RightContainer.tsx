@@ -1,69 +1,66 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import MovieTitleGuess from "../movie/MovieTitle";
 import PosterContainer from "./PosterContainer";
 import FooterComponent from "../FooterComponent";
-import InputComponent from "../InputComponent";
 import ButtonContainer from "./ButtonContainer";
 import { Movie } from "../../types/movie";
+import styles from "../../styles/MovieTriviaPage.module.css";
+import InputComponent from "../InputComponent";
+import { Alert, notification } from "antd";
 
 type Props = {
   movie: Movie;
+  index: number
+  blur: number[]
+  setBlur: React.Dispatch<React.SetStateAction<number[]>>
 };
 
-const FooterChildren: React.FC<Props> = ({movie}): ReactElement => {
-  const movieTitle = movie.title;
+const FooterChildren: React.FC<Props> = ({
+  movie,
+  setBlur,
+  index,
+  blur,
+}): ReactElement => {
+  const movieTitle = movie.title.toUpperCase();
 
   const generateRandomIndex = () => {
     const firstIndex = Math.floor(Math.random() * movieTitle.length);
     const secondIndex = Math.floor(Math.random() * movieTitle.length);
-    return [firstIndex, secondIndex];
+    const thirdIndex = Math.floor(Math.random() * movieTitle.length);
+    return [firstIndex, secondIndex, thirdIndex];
   };
 
-//   const [inputs, setInputs] = useState(new Array(movieTitle.length).fill(""));
-const words = movieTitle.split(" ");
+  const words = movieTitle.split(" ");
 
-const initialInputs = words.map(word => new Array(word.length).fill(''));  
-const [inputs, setInputs] = useState(initialInputs);
-const [revealedPositions, setRevealedPositions] = useState<number[]>([]);
+  const initialInputs = words.map((word) => new Array(word.length).fill(""));
+  const [inputs, setInputs] = useState(initialInputs);
+  const [correctWords, setCorrectWords] = useState<number[]>([]);
 
+  const [revealedPositions, setRevealedPositions] = useState<number[]>([]);
+
+  
   useEffect(() => {
     const positions = generateRandomIndex();
     setRevealedPositions(positions);
   }, []);
 
-//   useEffect(() => {
-//     const initialInputs = inputs.map((input, index) =>
-//       revealedPositions.includes(index) ? movieTitle[index] : ""
-//     );    
-//     setInputs(initialInputs);
-//   }, [revealedPositions]);
-
-useEffect(() => {
+  useEffect(() => {
     const updatedInputs = inputs.map((wordInputs, wordIndex) =>
       wordInputs.map((_: any, charIndex: number) => {
-        const globalIndex = words.slice(0, wordIndex).join(' ').length + wordIndex + charIndex;
-        return revealedPositions.includes(globalIndex) ? movieTitle[globalIndex] : '';
+        const globalIndex =
+          words.slice(0, wordIndex).join(" ").length + wordIndex + charIndex;
+        return revealedPositions.includes(globalIndex)
+          ? movieTitle[globalIndex]
+          : "";
       })
     );
     setInputs(updatedInputs);
   }, [revealedPositions]);
 
-//   const handleChange = (event: any, index: number) => {
-//     const newInputs = [...inputs];
-//     newInputs[index] = event.target.value;
-//     setInputs(newInputs);
-//   };
-
-//   const checkTitle = () => {
-//     const userTitle = inputs.join("");
-//     if (userTitle === movieTitle) {
-//       alert("Correct!");
-//     } else {
-//       alert("Try again!");
-//     }
-//   };
-
-const handleChange = (event: React.ChangeEvent<HTMLInputElement>, wordIndex: number, charIndex: number) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    wordIndex: number,
+    charIndex: number
+  ) => {
     const newInputs = inputs.map((wordInputs, wi) =>
       wordInputs.map((input: any, ci: any) =>
         wi === wordIndex && ci === charIndex ? event.target.value : input
@@ -73,47 +70,94 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>, wordIndex: num
   };
 
   const checkTitle = () => {
-    const userTitle = inputs.map(wordInputs => wordInputs.join('')).join(' ');
-    if (userTitle === movieTitle) {
-      alert('Correct!');
+    const userTitle = inputs
+      .map((wordInputs) => wordInputs.join(""))
+      .join(" ")
+      .toUpperCase();
+    const userWords = userTitle.split(" ");
+
+    let newCorrectWords = [...correctWords];
+    let allCorrect = true;
+
+    userWords.forEach((word, index) => {
+      if (word === words[index]) {
+        if (!newCorrectWords.includes(index)) {
+          newCorrectWords.push(index);
+        }
+      } else {
+        allCorrect = false;
+      }
+    });
+
+    if (allCorrect) {
+      setBlur((prev) => {
+        const newBlurStates = [...prev];
+        newBlurStates[index] = 0;
+        return newBlurStates;
+      });
+      
     } else {
-      alert('Try again!');
+      setCorrectWords(newCorrectWords);
+      const newInputs = inputs.map((inputGroup, idx) => {
+        if (!newCorrectWords.includes(idx)) {
+          return inputGroup.map(() => "");
+        }
+        setBlur((prev) => {
+          const newBlurStates = [...prev];
+          newBlurStates[index] = blur[index]/1.5;
+          return newBlurStates;
+        });
+        return inputGroup;
+      });
+      setInputs(newInputs);
     }
   };
 
   return (
     <>
-    <div className="title-container">
-      <div className="input-container">
-        {inputs.map((wordInputs, wordIndex) => (
-          <div key={wordIndex} className="word-container">
-            {wordInputs.map((input: string, charIndex: number) => (
-              <input 
-                key={charIndex}
-                type="text"
-                maxLength={1}
-                className="input-box"
-                value={input}
-                onChange={(event) => handleChange(event, wordIndex, charIndex)}
-                disabled={revealedPositions.includes(
-                  words.slice(0, wordIndex).join(' ').length + wordIndex + charIndex
-                )}
-              />
-            ))}
-          </div>
-        ))}
+      <div className={styles.titleContainer}>
+        <div className={styles.inputContainer}>
+          {inputs.map((wordInputs, wordIndex) => (
+            <div key={wordIndex} className={styles.wordContainer}>
+              {wordInputs.map((input: string, charIndex: number) => (
+                <InputComponent
+                  key={charIndex}
+                  type="text"
+                  maxLength={1}
+                  value={input}
+                  handleChange={(event) =>
+                    handleChange(event, wordIndex, charIndex)
+                  }
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+        <ButtonContainer handleSubmit={() => checkTitle()} />
       </div>
-      <ButtonContainer />
-    </div>
     </>
   );
 };
 
-const RightContainer: React.FC<Props> = ({ movie }): ReactElement => {
+const RightContainer: React.FC<Props> = ({
+  movie,
+  setBlur,
+  index,
+  blur,
+}): ReactElement => {
   return (
-    <div className="right">
-      <PosterContainer imageSrc={movie.poster} />
-      <FooterComponent children={<FooterChildren movie={movie} />} />
+    <div className={styles.right}>
+      <PosterContainer imageSrc={movie.poster} blur={blur[index]}/>
+      <FooterComponent
+        children={
+          <FooterChildren
+            movie={movie}
+            setBlur={setBlur}
+            index={index}
+            blur={blur}
+          />
+        }
+      />
     </div>
   );
 };

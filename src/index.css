@@ -8,19 +8,6 @@ body, html {
   margin: 0;
 }
 
-
-.container {
-  display: flex !important;
-  width: 100% !important;
-  height: 100vh !important;
-}
-
-.left {
-  flex: 0 0 50%; 
-  margin-right: 0.2rem;
-}
-
-
 .ant-collapse {
   height: 100vh;
   padding-top: 10rem;
@@ -29,68 +16,6 @@ body, html {
   color: black; 
   font-size: 20px; 
   text-align:justify;
-}
-
-
-.right {
-  flex: 0 0 50%;
-  border-left: 2px solid black;
-  border-bottom: 2px solid black;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.poster-container {
-  display: flex;
-  justify-content: center;
-  height: 80%;
-  width: 80%;
-  margin-bottom: 1rem;
-}
-
-.one {
-  height: 100%; 
-  width: 60%; 
-}
-
-
-.footer {
-  flex: 0 0 5%;        
-}
-
-
-.title-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.input-container {
-  display: flex;
-  justify-content: center;
-}
-
-.word-container {
-  margin: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-}
-
-.input-box {
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  font-size: 15px;
-}
-
-.button-container{
-  display: flex;
-  justify-content: center;
 }
 
 .ant-btn {
@@ -104,21 +29,6 @@ body, html {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
 }
-
-button:hover {
-  background-color: #0056b3; 
-}
-
-button:active {
-  background-color: #003f7f; 
-  transform: scale(0.95); 
-}
-
-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); 
-}
-
 
 .slick-arrow::after{
   width: 5vw;

@@ -1,15 +1,18 @@
 import React, { ReactElement } from 'react'
+import styles from "../../styles/MovieTriviaPage.module.css";
 
 type Props = {
-    imageSrc: string
+    imageSrc: string;
+    blur: number
 }
 
-const PosterContainer:React.FC<Props> = ({imageSrc}):ReactElement => {
+const PosterContainer:React.FC<Props> = ({imageSrc, blur}):ReactElement => {
   return (
-    <div className="poster-container">
+    <div className={styles.posterContainer}>
     <img
-      className="one"
+      className={styles.posterImage}
       src={imageSrc}
+      style={{"filter": `blur(${blur}rem)`}}
     />
   </div>
   )
