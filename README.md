@@ -1,46 +1,87 @@
-# Getting Started with Create React App
+# Tea Time
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Tea Time is a web application designed to provide a seamless and ad-free gaming experience for friends, colleagues, and family members. Whether you're working remotely or just looking to spend some quality time together, Tea Time offers a curated list of games that you can easily browse and start playing. Currently, the application features a movie trivia game, with plans to add more games in the future. The project is open for contributions, allowing other developers to add their own games or improve existing ones.
 
-## Available Scripts
+## Play Online
 
-In the project directory, you can run:
+You can play Tea Time online [here](https://www.ttime.site/).
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Repositories
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Tea Time consists of two repositories:
 
-### `npm test`
+- **Frontend (client)**: This repository contains the frontend code of the application. You can find it [here](https://github.com/uankit/teatime-client).
+- **Backend (server)**: This repository contains the backend code. If you are working with an API, make changes in this repository. You can find it [here](https://github.com/uankit/teatime-server).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Table of Contents
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Note on Code Quality](#note-on-code-quality)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Ad-Free Experience**: Enjoy uninterrupted gaming without annoying ads.
+- **Curated Game List**: Easily browse and select games from a curated list.
+- **Movie Trivia Game**: Challenge your friends with our initial movie trivia game.
+- **Future Expansion**: More games will be added, and developers can contribute their own games.
 
-### `npm run eject`
+## Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To get started with Tea Time, follow these steps:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/your-username/teatime.git
+    cd teatime
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2. **Install dependencies**:
+    ```sh
+    npm install
+    ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+3. **Start the development server**:
+    ```sh
+    npm start
+    ```
 
-## Learn More
+The application will be available at `http://localhost:3000`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Usage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **Browse Games**: On the home page, scroll through the list of available games.
+2. **Select a Game**: Click on a game to view more details and start playing.
+3. **Enjoy Ad-Free Gaming**: Play the game with your friends or colleagues without any interruptions.
+
+## Contributing
+
+We welcome contributions from the community! Here's how you can contribute:
+
+1. **Fork the repository**.
+2. **Create a new branch**:
+    ```sh
+    git checkout -b feature/new-game
+    ```
+3. **Make your changes**.
+4. **Commit your changes**:
+    ```sh
+    git commit -m "Add new game: Game Name"
+    ```
+5. **Push to the branch**:
+    ```sh
+    git push origin feature/new-game
+    ```
+6. **Create a pull request**.
+
+## Note on Code Quality
+
+The current codebase is a work in progress and may not be well-structured. I will be iterating over it to improve documentation and code quality. If anyone feels like providing structure, optimizations, or enhancements, please feel free to contribute. Your help is greatly appreciated!
+
+---
+
+Enjoy using Tea Time! If you have any questions or feedback, please feel free to reach out.
