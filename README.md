@@ -84,4 +84,4 @@ The current codebase is a work in progress and may not be well-structured. I wil
 
 ---
 
-Enjoy using Tea Time! If you have any questions or feedback, please feel free to reach out.
+Enjoy using Tea Time! If you have any questions or feedback, please feel free to reach out at [uankitu@gmail.com](mailto:uankitu@gmail.com) or on [LinkedIn](https://www.linkedin.com/in/uankit).
